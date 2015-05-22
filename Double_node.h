@@ -1,7 +1,7 @@
 /*****************************************
- * Name: Anoj Arulanantham
- * Student ID: 20458439
- * UW User ID:  aarulana
+ * Name: Sunny Dhaliwal
+ * Student ID: 20478089
+ * UW User ID:  s24dhali
  * Submitted for ECE 250
  * Department of Electrical and Computer Engineering
  * University of Waterloo
