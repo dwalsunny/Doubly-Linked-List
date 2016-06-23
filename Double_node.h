@@ -2,10 +2,8 @@
  * Name: Sunny Dhaliwal
  * Student ID: 20478089
  * UW User ID:  s24dhali
- * Submitted for ECE 250
  * Department of Electrical and Computer Engineering
  * University of Waterloo
- * Calender Term of Submission:  (Winter) 2014
  *
  * By submitting this file, I affirm that
  * I am the author of all modifications to
@@ -16,8 +14,6 @@
 #define DOUBLE_NODE_H
 
 #define nullptr 0
-
-#include "ece250.h"
 
 template <typename Type>
 class Double_list;
@@ -33,8 +29,9 @@ class Cyclic_double_sentinel_list;
 
 template <typename Type>
 class Double_node {
+
 private:
-    Type       element;
+    Type element;
     Double_node *previous_node;
     Double_node *next_node;
     
@@ -56,6 +53,7 @@ public:
     //    use   ptr->next()      to access it
 };
 
+
 template <typename Type>
 Double_node<Type>::Double_node( Type const &e, Double_node<Type> *p, Double_node<Type> *n ):
 element( e ),
@@ -66,7 +64,7 @@ next_node( n ) {
 template <typename Type>
 Type Double_node<Type>::retrieve() const {
     // returns the value at the specific node
-	return element;
+    return element;
 }
 
 template <typename Type>
@@ -78,7 +76,7 @@ Double_node<Type> *Double_node<Type>::previous() const {
 template <typename Type>
 Double_node<Type> *Double_node<Type>::next() const {
     // returns a pointer pointing to the node next to the node currently at
-	return next_node;
+    return next_node;
 }
 
 #endif
