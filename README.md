@@ -1,7 +1,7 @@
 # Linked_Queue
 
 
-PODLL (Plain Old Doubly Linked List)
+PODLL (Plain Old Doubly Linked List) implemented in C++
 
 How to build/use:
   1. You must include the class as: #include "Double_list.h"
