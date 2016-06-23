@@ -2,10 +2,8 @@
  * Name: Sunny Dhaliwal
  * Student ID: 20478089
  * UW User ID:  s24dhali
- * Submitted for ECE 250
  * Department of Electrical and Computer Engineering
  * University of Waterloo
- * Calender Term of Submission:  (Winter) 2014
  *
  * By submitting this file, I affirm that
  * I am the author of all modifications to
@@ -17,11 +15,8 @@
 
 #define nullptr 0
 
-#include "ece250.h"
 #include "Double_node.h"
-#include "Exception.h"
-
-#define nullptr 0
+#include <iostream>
 
 template <typename Type>
 class Double_list {
@@ -61,10 +56,6 @@ public:
     
     int erase( Type const & );
     
-	// Friends
-    
-	template <typename T>
-	friend std::ostream &operator<<( std::ostream &, Double_list<T> const & );
 };
 
 template <typename Type>
@@ -79,7 +70,7 @@ Double_list<Type>::Double_list( Double_list<Type> const &list ):
 list_head( nullptr ),
 list_tail( nullptr ),
 list_size( 0 ) {
-	
+    
     //Iterate through the list and push back each element in the list to this doubly linked list.
     for(Double_node<Type> *ptr = list.list_head; ptr!=nullptr; ptr = ptr->next())
     {
@@ -107,15 +98,15 @@ int Double_list<Type>::size() const {
 template <typename Type>
 bool Double_list<Type>::empty() const {
     // Returns a true/false depending on if list_size = 0 (this is because we used the double equal sign)
-	return (list_size == 0);
+    return (list_size == 0);
 }
 
 template <typename Type>
 Type Double_list<Type>::front() const {
     // If the linked list is empty we throw an underflow
-	if(empty())
+    if(empty())
     {
-        throw underflow();
+        throw;
     }
     
     // If the linked list has at least 1 element it will return the value at the head.
@@ -127,7 +118,7 @@ Type Double_list<Type>::back() const {
     // If the linked list is empty we throw an underflow
     if(empty())
     {
-        throw underflow();
+        throw;
     }
     
     // If the linked list has at least 1 element it will return the value at the tail.
@@ -137,13 +128,13 @@ Type Double_list<Type>::back() const {
 template <typename Type>
 Double_node<Type> *Double_list<Type>::head() const {
     // Returns the pointer to the head of the linked list
-	return list_head;
+    return list_head;
 }
 
 template <typename Type>
 Double_node<Type> *Double_list<Type>::tail() const {
     // Returns the pointer to the tail of the linked list.
-	return list_tail;
+    return list_tail;
 }
 
 template <typename Type>
@@ -156,7 +147,7 @@ int Double_list<Type>::count( Type const &obj ) const {
     
     // Iterate through the linked list and increment the counter variable by 1 each time the current pointer has the same
     // value as the value being passed in.
-	for(Double_node<Type> *ptr = list_head; ptr != nullptr; ptr = ptr->next())
+    for(Double_node<Type> *ptr = list_head; ptr != nullptr; ptr = ptr->next())
     {
         if(ptr->retrieve() == obj)
         {
@@ -169,18 +160,18 @@ int Double_list<Type>::count( Type const &obj ) const {
 
 template <typename Type>
 void Double_list<Type>::swap( Double_list<Type> &list ) {
-	std::swap( list_head, list.list_head );
-	std::swap( list_tail, list.list_tail );
-	std::swap( list_size, list.list_size );
+    std::swap( list_head, list.list_head );
+    std::swap( list_tail, list.list_tail );
+    std::swap( list_size, list.list_size );
 }
 
 template <typename Type>
 Double_list<Type> &Double_list<Type>::operator=( Double_list<Type> const &rhs ) {
-	Double_list<Type> copy( rhs );
+    Double_list<Type> copy( rhs );
     
-	swap( copy );
-	
-	return *this;
+    swap( copy );
+    
+    return *this;
 }
 
 template <typename Type>
@@ -236,7 +227,7 @@ Type Double_list<Type>::pop_front() {
     // If the linked list is empty throw an underflow.
     if(empty())
     {
-        throw underflow();
+        throw;
     }
     
     // If the linked list has a size of 1, save the value of the element being popped, assign the head and tail pointers
@@ -272,7 +263,7 @@ Type Double_list<Type>::pop_back() {
     // If the linked list is empty, throw an underflow.
     if(empty())
     {
-        throw underflow();
+        throw;
     }
     
     // If the linked list has a size of 1, save the value of the element being popped, assign the head and tail pointers
@@ -312,59 +303,34 @@ int Double_list<Type>::erase( Type const &obj ) {
         if(ptr->retrieve() == obj)
         {
             // If the value passed in is equal to the value at the head of the link list we pop front and return 1
-			if(head() == ptr)
+            if(head() == ptr)
             {
-				pop_front();
-				return 1;
-			}
+                pop_front();
+                return 1;
+            }
             
             // If the value passed in is equal to the value at the tail of the link list we pop back and return 1
             else if(tail() == ptr)
             {
-				pop_back();
-				return 1;
-			}
+                pop_back();
+                return 1;
+            }
             
             // If the value passed in is between the head and tail it will reassign the next and previous pointers to exclude
             // the pointer we are trying to remove and then it will delete that ptr and return 1.
             else
             {
-				ptr->previous_node->next_node = ptr->next_node;
-				ptr->next_node->previous_node = ptr->previous_node;
-				delete ptr;
-				--list_size;
-				return 1;
-			}
-		}
+                ptr->previous_node->next_node = ptr->next_node;
+                ptr->next_node->previous_node = ptr->previous_node;
+                delete ptr;
+                --list_size;
+                return 1;
+            }
+        }
     }
     
     // If the value passed into the method is not found 0 will be returned.
     return 0;
 }
-
-
-// You can modify this function however you want:  it will not be tested
-
-template <typename T>
-std::ostream &operator<<( std::ostream &out, Double_list<T> const &list ) {
-	out << "head";
-    
-	for ( Double_node<T> *ptr = list.head(); ptr != nullptr; ptr = ptr->next() ) {
-		out << "->" << ptr->retrieve();
-	}
-    
-	out << "->0" << std::endl << "tail";
-    
-	for ( Double_node<T> *ptr = list.tail(); ptr != nullptr; ptr = ptr->previous() ) {
-		out << "->" << ptr->retrieve();
-	}
-    
-	out << "->0";
-    
-	return out;
-}
-
-// Is an error showing up in ece250.h or elsewhere?
-// Did you forget a closing '}' ?
 
 #endif
